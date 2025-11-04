@@ -92,7 +92,7 @@ source ~/.bashrc
 
   ### [ 硬體連接 ]
 
-  - [ USB ] 
+  - [ Webcam ] 
 
     ``` bash
     ros2 run usb_img_pkg webcam_image_node
