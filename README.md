@@ -82,7 +82,7 @@ git clone https://github.com/FantasyWilly/AESIL-Image.git
 *Step2* - 編譯工作空間
 
 ``` bash
-colon build
+colcon build
 source ~/.bashrc
 ```
 
