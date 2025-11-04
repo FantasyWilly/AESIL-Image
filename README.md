@@ -92,7 +92,7 @@ source ~/.bashrc
 
   ### [ 硬體連接 ]
 
-  - [ Webcam ] 
+  - Webcam 
 
     ``` bash
     ros2 run usb_img_pkg webcam_image_node
@@ -106,7 +106,7 @@ source ~/.bashrc
 
   ### [ 串流地址 ]
 
-  - [ RTSP, RTMP, HTTP ]  
+  - RTSP, RTMP, HTTP  
 
     ``` bash
     ros2 run stream_img_pkg stream_image_node
