@@ -20,6 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'stream_image_node = stream_img_pkg.stream_image_node:main',
         ],
     },
 )
