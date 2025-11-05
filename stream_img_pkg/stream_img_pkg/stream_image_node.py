@@ -8,7 +8,7 @@ Email   : bc697522h04@gmail.com
 SPDX-License-Identifier: Apache-2.0 
 
 功能總覽:
-    • 從 RTSP, RTMP, HTTP 串流獲取影像來源
+    • 從 URL, RTMP, HTTP 串流獲取影像來源
     • 透過 Cv_Bridge 將影像傳至 ROS2
 
 遵循:
@@ -35,20 +35,20 @@ from cv_bridge import CvBridge
 
 
 # ------------------------------------------------------------------------------------ #
-# RTSPImgBridge 獲取影像來源並傳至 ROS2
+# STREAMImgBridge 獲取影像來源並傳至 ROS2
 # ------------------------------------------------------------------------------------ #
-class RTSPImgBridge(Node):
+class STREAMImgBridge(Node):
     def __init__(self):
 
         # 1-1. 初始化 Node 節點
         super().__init__('stream_image_node')
 
-        # 1-2. 宣告 RTSP URL 參數
+        # 1-2. 宣告 CAMERA URL 參數
         self.declare_parameter(
-            'rtsp_url', 
+            'camera_source', 
             'rtsp://user:user@192.168.168.108:554/cam/realmonitor?channel=1&subtype=0')
-        self.rtsp_url = self.get_parameter('rtsp_url').get_parameter_value().string_value
-        self.get_logger().info(f'使用 RTSP URL: {self.rtsp_url}')
+        self.camera_source = self.get_parameter('camera_source').get_parameter_value().string_value
+        self.get_logger().info(f'使用 CAMERA URL: {self.camera_source}')
 
         # 1-3. 初始化 ROS2 Publisher
         self.publisher_ = self.create_publisher(
@@ -60,7 +60,7 @@ class RTSPImgBridge(Node):
         # 1-4. 初始化 CvBridge
         self.bridge = CvBridge()
 
-        # 2. 開啟 RTSP 串流
+        # 2. 開啟 URL 串流
         self.open_stream()
 
         # 3.1 從裝置直接獲取 FPS or 採用固定幀率
@@ -70,7 +70,7 @@ class RTSPImgBridge(Node):
             self.get_logger().info(f'[FPS]: {getattr_fps:.2f}')
             timer_period = 1.0 / getattr_fps
         else:
-            fps = 30.0
+            fps = 25.0
             self.get_logger().warning(f'[失敗]: 無法從裝置獲取FPS, 採用預設值 {fps} FPS')
             timer_period = 1.0 / fps
 
@@ -82,15 +82,15 @@ class RTSPImgBridge(Node):
         # 4. 每秒呼叫 計數器函數
         self.timer = self.create_timer(timer_period, self.timer_callback)
 
-    # ------------------------------ 打開 RTSP 影像串流 -------------------------------- #
+    # ------------------------------ 打開 URL 影像串流 -------------------------------- #
     def open_stream(self):
-        self.get_logger().info('[資訊]: 嘗試開啟 RTSP 串流...')
-        self.cap = cv2.VideoCapture(self.rtsp_url, cv2.CAP_FFMPEG)
+        self.get_logger().info('[資訊]: 嘗試開啟 URL 串流...')
+        self.cap = cv2.VideoCapture(self.camera_source, cv2.CAP_FFMPEG)
         time.sleep(0.5)
         if not self.cap.isOpened():
-            self.get_logger().error(f'[失敗]: 無法開啟 RTSP 串流 {self.rtsp_url}')
+            self.get_logger().error(f'[失敗]: 無法開啟 URL 串流 {self.camera_source}')
         else:
-            self.get_logger().info('[成功]: RTSP 串流已開啟')
+            self.get_logger().info('[成功]: URL 串流已開啟')
 
     # -------------------------------- 發布影像至 ROS2 --------------------------------- #
     def timer_callback(self):
@@ -121,7 +121,7 @@ class RTSPImgBridge(Node):
 # ------------------------------------------------------------------------------------ #
 def main(args=None):
     rclpy.init(args=args)
-    node = RTSPImgBridge()
+    node = STREAMImgBridge()
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
