@@ -43,18 +43,25 @@ class USBImgBridge(Node):
         # 1-1. 初始化 Node 節點
         super().__init__('webcam_image_node')
 
-        # 1-2. 初始化 ROS2 Publisher
+        # 1-2. 宣告 CAMERA DEVICE 參數
+        self.declare_parameter(
+            'camera_device', 
+            '/dev/video0')
+        self.camera_device = self.get_parameter('camera_device').get_parameter_value().string_value
+        self.get_logger().info(f'[使用]: CAMERA DEVICE: {self.camera_device}')
+
+        # 1-3. 初始化 ROS2 Publisher
         self.publisher_ = self.create_publisher(
             Image, 
             '/webcam/camera/image_raw', 
             qos_profile_sensor_data
         )
 
-        # 1-3. 初始化 CvBridge
+        # 1-4. 初始化 CvBridge
         self.bridge = CvBridge()
 
         # 2. 獲取影像來源
-        self.cap = cv2.VideoCapture('/dev/video0')
+        self.cap = cv2.VideoCapture(self.camera_device)
         if not self.cap.isOpened():
             self.get_logger().error('[失敗]: Failed to open /dev/video0')
             return

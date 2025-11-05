@@ -92,29 +92,64 @@ source ~/.bashrc
 
   ### [ 硬體連接 ]
 
-  - Webcam 
+  功能導覽 :
+  * 獲取 USB 影像來源
+  * 透過 Cv_Bridge 將影像傳至 ROS2
+
+  Node :
+  * `/webcam_image_node` (Webcam)
+
+  Publisher Topics :
+  * `/webcam/camera/image_raw` (Webcam)
+
+    ---
+
+  > ★ 二種方式開啟程式 ( Optional )
+
+  - ROS2 Running - (Optional)
 
     ``` bash
-    ros2 run usb_img_pkg webcam_image_node
+    ros2 run usb_img_pkg webcam_image_node          # Webcam
     ```
 
-    `Node:` /webcam_image_node
-  
-    `Topic:` /webcam/camera/image_raw
+  - ROS2 Launch - (Optional)
+
+    ```bash
+    ros2 launch usb_img_pkg webcam_image_launch.py  # Webcam
+    ```
     
-    ---
+  ---
 
   ### [ 串流地址 ]
 
-  - RTSP, RTMP, HTTP  
+  功能導覽 :
+  * 從 RTSP, RTMP, HTTP 串流獲取影像來源
+  * 透過 Cv_Bridge 將影像傳至 ROS2
 
-    ``` bash
+  Node :
+  * `/stream_image_node`
+
+  Publisher Topics :
+  * `/stream/camera/image_raw` 
+
+  Parameters :
+  * `camera_source` - rtsp 原影像地址
+    
+    ---
+
+  > ★ 二種方式開啟程式 ( Optional )
+
+  - ROS2 Running - (Optional)
+
+    ```bash
     ros2 run stream_img_pkg stream_image_node
     ```
 
-    `Node:` /stream_image_node
-  
-    `Topic:` /stream/camera/image_raw
+  - ROS2 Launch - (Optional)
+
+    ```bash
+    ros2 launch stream_img_pkg stream_image_launch.py
+    ```
     
     ---
 

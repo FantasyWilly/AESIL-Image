@@ -8,7 +8,7 @@ Email   : bc697522h04@gmail.com
 SPDX-License-Identifier: Apache-2.0 
 
 功能總覽:
-    • 從 URL, RTMP, HTTP 串流獲取影像來源
+    • 從 RTSP, RTMP, HTTP 串流獲取影像來源
     • 透過 Cv_Bridge 將影像傳至 ROS2
 
 遵循:
@@ -48,7 +48,7 @@ class STREAMImgBridge(Node):
             'camera_source', 
             'rtsp://user:user@192.168.168.108:554/cam/realmonitor?channel=1&subtype=0')
         self.camera_source = self.get_parameter('camera_source').get_parameter_value().string_value
-        self.get_logger().info(f'使用 CAMERA URL: {self.camera_source}')
+        self.get_logger().info(f'[使用]: CAMERA URL: {self.camera_source}')
 
         # 1-3. 初始化 ROS2 Publisher
         self.publisher_ = self.create_publisher(
