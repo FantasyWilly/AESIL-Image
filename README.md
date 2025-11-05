@@ -102,6 +102,9 @@ source ~/.bashrc
   Publisher Topics :
   * `/webcam/camera/image_raw` (Webcam)
 
+  Parameters :
+  * `camera_device` - 裝置名稱
+
     ---
 
   > ★ 二種方式開啟程式 ( Optional )
@@ -133,7 +136,7 @@ source ~/.bashrc
   * `/stream/camera/image_raw` 
 
   Parameters :
-  * `camera_source` - rtsp 原影像地址
+  * `camera_source` - URL 原影像地址
     
     ---
 
@@ -163,6 +166,6 @@ source ~/.bashrc
   rqt
   ```
 
-  ![本地圖片](./docs/images/rqt_image.png)
+  ![RQT開啟畫面](./docs/images/rqt_image.png)
 
   ---
