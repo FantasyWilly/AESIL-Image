@@ -96,7 +96,7 @@ class STREAMImgBridge(Node):
     def timer_callback(self):
         ret, frame = self.cap.read()
         if not ret:
-            self.get_logger().warning('[警告]: 讀取影格失敗，嘗試重連...')
+            self.get_logger().warning('[警告]: 讀取影格失敗, 嘗試重連...')
             self.cap.release()
             time.sleep(1.0)
             self.open_stream()
